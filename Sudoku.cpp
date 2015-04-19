@@ -12,79 +12,70 @@ void Sudoku::Sudoku(const int init_map[])
 	for(int i = 0; i<sudokuSize; ++i)
 		map[i] = init_map[i];
 }
- 
-void Sudoku::setMap(const int set_Map[])
+
+void GQ0()
+{
+	int r[9]= rand()%9+1;
+	int a = rand		
+	cout<<"i g h c a b f d e -1 -1 -1"<<endl;
+	cout<<"c a b f d e i g h -1 -1 -1"<<endl;
+	cout<<"f d e i g h c a b -1 -1 -1"<<endl;
+	cout<<"g h i a b c -1 -1 -1 d e f"<<endl;
+	cout<<"a b c d e f -1 -1 -1 g h i"<<endl;
+	cout<<"d e f g h i -1 -1 -1 a b c"<<endl;
+	cout<<"h i g -1 -1 -1 d e f c a b"<<endl;
+	cout<<"b c a -1 -1 -1 h g i f d e"<<endl;
+	cout<<"e f d -1 -1 -1 a b c i g h"<<endl;
+	cout<<"-1 -1 -1 b c a e f d h i g"<<endl;
+	cout<<"-1 -1 -1 e f d h i g b c a"<<endl;
+	cout<<"-1 -1 -1 h i g b c a e f d"<<endl;
+}
+
+void GQ1()
+{
+	cout<<"-1 -1 -1 i g h c a b f d e"<<endl;
+	cout<<"-1 -1 -1 c a b f d e i g h"<<endl;
+	cout<<"-1 -1 -1 f d e i g h c a b"<<endl;
+	cout<<"g h i -1 -1 -1 a b c d e f"<<endl;
+	cout<<"a b c -1 -1 -1 d e f g h i"<<endl;
+	cout<<"d e f -1 -1 -1 g h i a b c"<<endl;
+	cout<<"c a b g h i -1 -1 -1 e f d"<<endl;
+	cout<<"f d e a b c -1 -1 -1 h i g"<<endl;
+	cout<<"i g h d e f -1 -1 -1 b c a"<<endl;
+	cout<<"e f d h i g b c a -1 -1 -1"<<endl;
+	cout<<"h i g b c a e f g -1 -1 -1"<<endl;
+	cout<<"b c a e f d h i g -1 -1 -1"<<endl;
+
+}
+
+void GQ2()
 {
 
 }
- 
-void Sudoku::DFS(int x, int y, int mode) 
+
+int Sudoku::GiveQuestion() 
 { 
-	if(flag) return; 
-	if(x == 12 && y == 0) { 
-		cnt++; 
-		if(mode == 1 && num == cnt) flag = true; 
-		if(mode == 2 && cnt >= 2) { 
-			flag = true; cout << 2 << endl; return; 
-		} 
-		if(mode == 3 && cnt >= 2) {
-			 flag = true; 
-		} 
-		for(int i = 0; i < 12; i++) 
-			for(int j = 0; j < 12; j++) 
-				ans[i][j] = board[i][j]; 
-				return; 
+	Sudoku();
+	int mode;
+	srand(time(NULL));
+	mode = rand()%3;
+	switch(mode){
+		case 0:
+			GQ0();
+			break;
+		case 1:
+			GQ1();
+			break;
+		case 2:
+			GQ2();
+			break;
+		default:
+			cout << "fault"<<endl;
+			break;
 	}
-	int now = get_value(x, y); 
-	if(now == 0) { 
-		for(int i = 1; i <= 9; i++) 
-			if(valid(x, y, i)) {
-				set_value(x, y, i); 
-				DFS(x + (y+1)/12,(y+1)%12, mode); 
-				set_value(x, y, 0); 
-			}
-	 } else {
-		 DFS(x + (y+1)/12,(y+1)%12, mode); 
-	} 
 }
 
-void Sudoku::GiveQuestion() 
-{ 
-	static int tmp = 0; 
-	init(); 
-	flag = false; 
-	cnt = 0; 
-	if(!tmp) srand(time(NULL)); 
-	tmp++; 
-	num = rand()%10000+1; 
-	int a[4] = {0, 1, 2, 3}; 
-	random_shuffle(a, a + 4); 
-	for(int i = 0; i < 12; i++) 
-		for(int j = 0; j < 12; j++) 
-			if(j/3==a[i/3]) board[i][j] = -1; 
-	DFS(0, 0, 1); 
-	int b[9] = {1,2,3,4,5,6,7,8,9}; 
-	random_shuffle(b, b + 9); 
-	for(int i = 0; i < 12; i++) 
-		for(int j = 0 ; j < 12; j++) { 
-			board[i][j] = ans[i][j]; 
-			if(get_value(i, j) != -1) 
-				set_value(i, j, b[get_value(i, j)-1]); 
-		} 
-	cnt = rand()%30+20; 
-	while(cnt) { 
-		int x = rand()%12, y = rand()%12; 
-		if(board[x][y] != -1) 
-			board[x][y] = 0, cnt--; 
-	} 
-	flag = false; 
-	cnt = 0; 
-	DFS(0, 0, 3); 
-	if(cnt == 1) print(board); 
-	else GiveQuestion(); 
-}
-
-void Sudoku::Solve() 
+int Sudoku::Solve() 
 {
 
 
